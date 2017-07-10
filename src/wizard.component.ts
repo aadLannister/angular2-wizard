@@ -18,7 +18,7 @@ import { WizardStepComponent } from './wizard-step.component';
     <div class="card-footer" [hidden]="isCompleted">
         <button type="button" class="btn btn-secondary float-left" (click)="previous()" [hidden]="!hasPrevStep || !activeStep.showPrev">Previous</button>
         <button type="button" class="btn btn-secondary float-right" (click)="next()" [disabled]="!activeStep.isValid" [hidden]="!hasNextStep || !activeStep.showNext">Next</button>
-        <button type="button" class="btn btn-secondary float-right" (click)="complete()" [disabled]="!activeStep.isValid" [hidden]="hasNextStep">Done</button>
+        <button type="button" class="btn btn-secondary float-right" (click)="complete()" [disabled]="!activeStep.isValid" [hidden]="hasNextStep||waitingForHttpResponse">Done</button>
     </div>
   </div>`
   ,
@@ -40,6 +40,7 @@ export class WizardComponent implements AfterContentInit {
 
   private _steps: Array<WizardStepComponent> = [];
   private _isCompleted: boolean = false;
+  private waitingForHttpResponse: boolean = false;
 
   @Output()
   onStepChanged: EventEmitter<WizardStepComponent> = new EventEmitter<WizardStepComponent>();
@@ -84,7 +85,7 @@ export class WizardComponent implements AfterContentInit {
   }
 
   public goToStep(step: WizardStepComponent): void {
-    if (!this.isCompleted) {
+    if (!this.isCompleted && this.activeStep.isValid) {
       this.activeStep = step;
     }
   }
@@ -110,6 +111,10 @@ export class WizardComponent implements AfterContentInit {
   public complete(): void {
     this.activeStep.onComplete.emit();
     this._isCompleted = true;
+  }
+   
+  public waitingResponse(waiting:boolean){
+    this.waitingForHttpResponse=waiting;
   }
 
 }
