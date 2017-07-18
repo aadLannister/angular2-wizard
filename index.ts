@@ -8,6 +8,8 @@ export * from './src/wizard-step.component';
 
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { Http } from '@angular/http';
+import { HttpLoaderFactory } from '../../src/app/app.module';
 
 @NgModule({
   imports: [
