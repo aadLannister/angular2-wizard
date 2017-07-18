@@ -8,7 +8,7 @@ import { WizardStepComponent } from './wizard-step.component';
     <div class="card-header">
       <ul class="nav nav-justified">
         <li class="nav-item" *ngFor="let step of steps" [ngClass]="{'active': step.isActive, 'enabled': !step.isDisabled, 'disabled': step.isDisabled, 'completed': isCompleted}">
-          <a (click)="goToStep(step)">{{step.title}}</a>
+          <a (click)="goToStep(step)">{{step.title |translate}}</a>
         </li>
       </ul>
     </div>
@@ -16,9 +16,9 @@ import { WizardStepComponent } from './wizard-step.component';
       <ng-content></ng-content>
     </div>
     <div class="card-footer" [hidden]="isCompleted">
-        <button type="button" class="btn btn-secondary float-left" (click)="previous()" [hidden]="!hasPrevStep || !activeStep.showPrev">Previous</button>
-        <button type="button" class="btn btn-secondary float-right" (click)="next()" [disabled]="!activeStep.isValid" [hidden]="!hasNextStep || !activeStep.showNext">Next</button>
-        <button type="button" class="btn btn-secondary float-right" (click)="complete()" [disabled]="!activeStep.isValid" [hidden]="hasNextStep||waitingForHttpResponse">Done</button>
+        <button type="button" class="btn btn-secondary float-left" (click)="previous()" [hidden]="!hasPrevStep || !activeStep.showPrev">{{'WIZARD.PREVIOUS' |translate}}</button>
+        <button type="button" class="btn btn-secondary float-right" (click)="next()" [disabled]="!activeStep.isValid" [hidden]="!hasNextStep || !activeStep.showNext">{{'WIZARD.NEXT' |translate}}</button>
+        <button type="button" class="btn btn-secondary float-right" (click)="complete()" [disabled]="!activeStep.isValid" [hidden]="hasNextStep||waitingForHttpResponse">{{'WIZARD.DONE' |translate}}</button>
     </div>
   </div>`
   ,
